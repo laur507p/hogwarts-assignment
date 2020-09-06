@@ -108,6 +108,11 @@ function prepareObjects(jsonData) {
       student.image = undefined;
     }
 
-    console.log(student);
+    // console.log(student);
+
+    //add clean data to new array
+    cleanedData.push(student);
   });
+
+  console.table(cleanedData);
 }
