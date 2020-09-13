@@ -1,0 +1,37 @@
+/* general settings */
+
+body {
+  margin: 0;
+  background-color: #ebebeb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+}
+
+/* ------ main ------- */
+
+header h2 {
+  font-family: "mugglenews";
+}
+
+/* ------ fonts ------ */
+@font-face {
+  font-family: "mugglenews";
+  src: url("mugglenews_by_nathanthenerd_d41qn8p-webfont.woff2") format("woff2"),
+    url("mugglenews_by_nathanthenerd_d41qn8p-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "headline_one";
+  src: url("headoh__-webfont.woff2") format("woff2"),
+    url("headoh__-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
