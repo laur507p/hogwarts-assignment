@@ -17,6 +17,66 @@ img {
 
 header h2 {
   font-family: "mugglenews";
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 0;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.img {
+  width: 70px;
+  padding: 5px 10px 0 0;
+}
+
+.yellowfont {
+  color: #d8ad00;
+}
+
+.section-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.section-wrapper h1 {
+  font-family: "headline_one";
+  font-size: 5.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 78px;
+}
+
+.data-container {
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px;
+  width: 100%;
+}
+
+.list-item {
+  flex-basis: 49%;
+  padding: 10px;
+  display: flex;
+  font-size: 2rem;
+  margin: 2px 2px 8px 2px;
+  font-family: "headline_one";
+  justify-content: space-between;
+  border: 1px solid black;
+}
+
+.list-item .name {
+  margin: 0;
+}
+
+.list-item .house {
+  margin: 0;
 }
 
 /* ------ fonts ------ */
