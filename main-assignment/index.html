@@ -29,8 +29,57 @@
         at hogwarts
       </h1>
 
+      <div class="infobar">
+        <div class="search">
+          <input class="searchbox" type="search" placeholder="SEARCH" />
+          <input class="submitknap" type="submit" />
+        </div>
+
+        <div class="filter">
+          <label id="change-filter">
+            Filter:
+            <select name="theme" id="filtering">
+              <option value="*">All students</option>
+              <option value="gryffindor">Gryffindor</option>
+              <option value="hufflepuff">Hufflepuff</option>
+              <option value="slytherin">Slytherin</option>
+              <option value="ravenclaw">Ravenclaw</option>
+              <option value="prefects">Prefects</option>
+              <option value="expelled">Expelled students</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="sorting">
+          <label id="change-sorting">
+            Sort by:
+            <select name="theme" id="sorting">
+              <option value="firstname">First name</option>
+              <option value="lastname">Last name</option>
+              <option value="house">House</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
       <div class="data-container"></div>
     </div>
+
+    <section id="detalje" class="hide">
+      <article class="infoboks">
+        <button class="luk-knap">X</button>
+        <p class="name"></p>
+        <p class="house"></p>
+        <p class="bloodstatus"></p>
+        <p class="prefect"></p>
+        <p class="expelled"></p>
+        <p class="squad"></p>
+        <img class="image" src="" alt="Picture of student" />
+        <button class="expel-button">Expel student</button>
+        <button class="prefect-button">Make prefect</button>
+        <button class="squad-button">Add to inqustiflaskdj squad</button>
+      </article>
+    </section>
 
     <script src="script.js"></script>
   </body>

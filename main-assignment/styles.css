@@ -9,15 +9,25 @@ body {
   box-sizing: border-box;
 }
 
+:root {
+  --text-color: black;
+  --main-color: lavender;
+  --highligt-color: lightbluex;
+}
+
 img {
   width: 100%;
+}
+
+.hide {
+  display: none;
 }
 
 /* ------ main ------- */
 
 header h2 {
   font-family: "mugglenews";
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   text-align: center;
   margin: 0;
 }
@@ -29,7 +39,7 @@ header h2 {
 }
 
 .img {
-  width: 70px;
+  width: 50px;
   padding: 5px 10px 0 0;
 }
 
@@ -45,30 +55,27 @@ header h2 {
 
 .section-wrapper h1 {
   font-family: "headline_one";
-  font-size: 5.5rem;
+  font-size: 4rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  line-height: 78px;
+  line-height: 57px;
 }
 
 .data-container {
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
   width: 100%;
 }
 
 .list-item {
-  flex-basis: 49%;
   padding: 10px;
   display: flex;
   font-size: 2rem;
   margin: 2px 2px 8px 2px;
   font-family: "headline_one";
   justify-content: space-between;
-  border: 1px solid black;
+  border-bottom: 2px solid black;
 }
 
 .list-item .name {
@@ -77,6 +84,100 @@ header h2 {
 
 .list-item .house {
   margin: 0;
+}
+
+.infobar {
+  width: 100%;
+  height: 20px;
+  font-family: "headline_one";
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+}
+
+.infobar select {
+  font-family: "headline_one";
+  font-size: 1.4rem;
+  background-color: black;
+  color: white;
+  border-radius: 0;
+  border: 2px solid black;
+  letter-spacing: 1px;
+}
+
+.infobar .submitknap {
+  font-family: "headline_one";
+  font-size: 1.4rem;
+  background-color: black;
+  color: white;
+  border-radius: 0;
+  border: 2px solid black;
+  letter-spacing: 1px;
+}
+
+.infobar .searchbox {
+  font-family: "headline_one";
+  font-size: 1.4rem;
+  background-color: #ebebeb;
+  color: black;
+  border: 2px solid black;
+  border-radius: 0;
+  letter-spacing: 1px;
+}
+
+.infobar .filter {
+  padding: 0 20px;
+}
+
+/* ------ DETALJE VIEW------ */
+#detalje {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: var(--text-color);
+  /* cursor: pointer; */
+}
+
+.infoboks {
+  position: fixed;
+  padding: 20px;
+  background-color: var(--highligt-color);
+  color: var(--text-color);
+  width: 30vw;
+  left: 35vw;
+  height: 80vh;
+  top: 10vh;
+  margin: 0;
+  cursor: default;
+}
+
+.gryffindor-theme {
+  --text-color: rgb(255, 225, 0);
+  --main-color: darkgrey;
+  --highligt-color: rgb(255, 0, 0);
+}
+
+.slytherin-theme {
+  --text-color: rgb(103, 0, 104);
+  --main-color: rgb(234, 53, 237);
+  --highligt-color: rgb(50, 174, 93);
+}
+
+.ravenclaw-theme {
+  --text-color: rgb(34, 0, 255);
+  --main-color: red;
+  --highligt-color: rgb(189, 189, 189);
+}
+
+.hufflepuff-theme {
+  --text-color: grey;
+  --main-color: black;
+  --highligt-color: pink;
 }
 
 /* ------ fonts ------ */
@@ -94,4 +195,24 @@ header h2 {
     url("headoh__-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
+}
+
+/* ------ mediaqueries ------ */
+
+@media only screen and (min-width: 800px) {
+  .list-item {
+    flex-basis: 49%;
+  }
+  header h2 {
+    font-size: 2.5rem;
+  }
+
+  .img {
+    width: 70px;
+  }
+
+  .section-wrapper h1 {
+    font-size: 5.5rem;
+    line-height: 78px;
+  }
 }
