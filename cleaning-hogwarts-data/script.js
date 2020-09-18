@@ -56,51 +56,35 @@ function prepareObjects(jsonData) {
     if (nameTrimmed.includes('"')) {
       student.middlename = undefined;
     } else if (nameTrimmed.includes(" ")) {
-      middleName = nameTrimmed.substring(
-        nameTrimmed.indexOf(" ") + 1,
-        nameTrimmed.lastIndexOf(" ") + 1
-      );
+      middleName = nameTrimmed.substring(nameTrimmed.indexOf(" ") + 1, nameTrimmed.lastIndexOf(" ") + 1);
     } else {
       student.middlename = undefined;
     }
 
     //  FINAL
-    student.firstname =
-      firstName.substring(0, 1).toUpperCase() +
-      firstName.substring(1).toLowerCase();
+    student.firstname = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
 
     // checks if last name includes a hyphen before changing to uppercase and lowercase
     if (lastName.includes("-")) {
       student.lastname = lastName;
     } else {
-      student.lastname =
-        lastName.substring(0, 1).toUpperCase() +
-        lastName.substring(1).toLowerCase();
+      student.lastname = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
     }
 
     student.middlename =
-      middleName.trimEnd().substring(0, 1).toUpperCase() +
-      middleName.trimEnd().substring(1).toLowerCase();
+      middleName.trimEnd().substring(0, 1).toUpperCase() + middleName.trimEnd().substring(1).toLowerCase();
 
-    student.nickname = nameTrimmed.substring(
-      nameTrimmed.indexOf('"') + 1,
-      nameTrimmed.lastIndexOf('"')
-    );
+    student.nickname = nameTrimmed.substring(nameTrimmed.indexOf('"') + 1, nameTrimmed.lastIndexOf('"'));
 
     student.house =
-      jsonObject.house.trim().substring(0, 1).toUpperCase() +
-      jsonObject.house.trim().substring(1).toLowerCase();
+      jsonObject.house.trim().substring(0, 1).toUpperCase() + jsonObject.house.trim().substring(1).toLowerCase();
 
     // navne til filnavne
     const fileLastName = lastName.toLowerCase();
     const firstCharName = firstName[0].toLowerCase();
 
     if (fileLastName.includes("-")) {
-      student.image =
-        fileLastName.substring(fileLastName.indexOf("-") + 1) +
-        "_" +
-        firstCharName +
-        ".png";
+      student.image = fileLastName.substring(fileLastName.indexOf("-") + 1) + "_" + firstCharName + ".png";
     } else if (nameTrimmed.includes(" ")) {
       student.image = `${fileLastName}_${firstCharName}.png`;
     } else {

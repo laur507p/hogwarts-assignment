@@ -180,6 +180,18 @@ header h2 {
   --highligt-color: pink;
 }
 
+/* ------ PREFECFT POP UP------ */
+
+#remove-prefect {
+  position: fixed;
+  width: 40vw;
+  height: 40vh;
+  background-color: yellow;
+  z-index: 10000;
+  top: 30vh;
+  left: 30vw;
+}
+
 /* ------ fonts ------ */
 @font-face {
   font-family: "mugglenews";
@@ -191,8 +203,7 @@ header h2 {
 
 @font-face {
   font-family: "headline_one";
-  src: url("headoh__-webfont.woff2") format("woff2"),
-    url("headoh__-webfont.woff") format("woff");
+  src: url("headoh__-webfont.woff2") format("woff2"), url("headoh__-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
