@@ -12,7 +12,7 @@ body {
 :root {
   --text-color: black;
   --main-color: lavender;
-  --highligt-color: lightbluex;
+  --highligt-color: lightblue;
 }
 
 img {
@@ -59,6 +59,7 @@ header h2 {
   text-transform: uppercase;
   letter-spacing: 1px;
   line-height: 57px;
+  margin-bottom: 10px;
 }
 
 .data-container {
@@ -76,6 +77,12 @@ header h2 {
   font-family: "headline_one";
   justify-content: space-between;
   border-bottom: 2px solid black;
+  transition: 0.3s;
+}
+
+.list-item:hover {
+  transition: 0.3s;
+  transform: translateX(10px);
 }
 
 .list-item .name {
@@ -91,10 +98,27 @@ header h2 {
   height: 20px;
   font-family: "headline_one";
   font-size: 1.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 90px;
   display: flex;
   flex-wrap: wrap;
   /* justify-content: space-between; */
+}
+
+.infobar .search {
+  margin-bottom: 5px;
+  margin-right: 20px;
+  flex-basis: 100%;
+}
+
+.infobar .filter {
+  flex-basis: 100%;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.infobar .sorting {
+  flex-basis: 100%;
+  margin-bottom: 5px;
 }
 
 .infobar select {
@@ -105,6 +129,7 @@ header h2 {
   border-radius: 0;
   border: 2px solid black;
   letter-spacing: 1px;
+  margin-right: 20px;
 }
 
 .infobar .submitknap {
@@ -127,10 +152,6 @@ header h2 {
   letter-spacing: 1px;
 }
 
-.infobar .filter {
-  padding: 0 20px;
-}
-
 /* ------ DETALJE VIEW------ */
 #detalje {
   height: 100vh;
@@ -143,29 +164,110 @@ header h2 {
   /* cursor: pointer; */
 }
 
+.luk-knap {
+  font-family: "headline_one";
+  font-size: 2rem;
+  border: none;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.luk-knap:hover {
+  transition: 0.3s;
+  transform: rotate(180deg);
+}
+
 .infoboks {
   position: fixed;
   padding: 20px;
-  background-color: var(--highligt-color);
-  color: var(--text-color);
-  width: 30vw;
-  left: 35vw;
-  height: 80vh;
-  top: 10vh;
+  background-color: #ebebeb;
+  font-family: "headline_one";
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  color: black;
+  width: 80vw;
+  left: 10vw;
+  height: 90vh;
+  top: 5vh;
   margin: 0;
   cursor: default;
+  border: 10px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col {
+  margin: 20px;
+  width: 100%;
+}
+
+.infoboks p {
+  margin: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid black;
+}
+
+.col-buttons {
+  flex-basis: 100%;
+  margin: 0 30px;
+  text-align: center;
+}
+
+.col-buttons button {
+  background-color: black;
+  color: #ebebeb;
+  border: none;
+  font-family: "headline_one";
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.col-buttons button:hover {
+  color: black;
+  background-color: rgba(0, 0, 0, 0.096);
+  transition: 0.3s;
+}
+
+.number-of-students {
+  font-family: "headline_one";
+  font-size: 2rem;
+  color: #ebebeb;
+  background-color: black;
+  display: inline-block;
+  letter-spacing: 0.5px;
+  padding: 0 5px;
+  margin-top: 20px;
+}
+
+.col-img {
+  flex-basis: 100%;
+  margin: 0 30px;
+}
+
+.col-img img {
+  width: 100px;
+  border: 7px solid black;
+
+  border-radius: 30px;
+}
+
+.full-col {
+  flex-basis: 100%;
 }
 
 .gryffindor-theme {
-  --text-color: rgb(255, 225, 0);
+  --text-color: rgb(255, 8, 0);
   --main-color: darkgrey;
-  --highligt-color: rgb(255, 0, 0);
+  --highligt-color: rgb(189, 189, 189);
 }
 
 .slytherin-theme {
-  --text-color: rgb(103, 0, 104);
+  --text-color: rgb(23, 255, 15);
   --main-color: rgb(234, 53, 237);
-  --highligt-color: rgb(50, 174, 93);
+  --highligt-color: rgb(189, 189, 189);
 }
 
 .ravenclaw-theme {
@@ -175,21 +277,51 @@ header h2 {
 }
 
 .hufflepuff-theme {
-  --text-color: grey;
+  --text-color: rgb(255, 251, 0);
   --main-color: black;
-  --highligt-color: pink;
+  --highligt-color: rgb(189, 189, 189);
 }
 
 /* ------ PREFECFT POP UP------ */
 
 #remove-prefect {
   position: fixed;
-  width: 40vw;
+  width: 50vw;
   height: 40vh;
-  background-color: yellow;
+  background-color: #ebebeb;
   z-index: 10000;
   top: 30vh;
-  left: 30vw;
+  left: 25vw;
+  border: 10px solid black;
+  text-align: center;
+  border-radius: 5px;
+}
+
+#remove-prefect h1 {
+  text-align: center;
+  font-family: "headline_one";
+  letter-spacing: 1px;
+  font-size: 1.5rem;
+  margin-top: 50px;
+}
+#remove-prefect button {
+  font-family: "headline_one";
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 1.6rem;
+  transition: 0.3s;
+  padding: 5px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#remove-prefect button:hover {
+  color: black;
+  background-color: white;
+  transition: 0.3s;
+  border: none;
 }
 
 /* ------ fonts ------ */
@@ -210,10 +342,7 @@ header h2 {
 
 /* ------ mediaqueries ------ */
 
-@media only screen and (min-width: 800px) {
-  .list-item {
-    flex-basis: 49%;
-  }
+@media only screen and (min-width: 950px) {
   header h2 {
     font-size: 2.5rem;
   }
@@ -225,5 +354,77 @@ header h2 {
   .section-wrapper h1 {
     font-size: 5.5rem;
     line-height: 78px;
+  }
+
+  .infobar {
+    width: 100%;
+    height: 20px;
+    font-family: "headline_one";
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .infobar .search {
+    margin-bottom: 5px;
+    margin-right: 20px;
+  }
+
+  .infobar select {
+    font-family: "headline_one";
+    font-size: 1.4rem;
+    background-color: black;
+    color: white;
+    border-radius: 0;
+    border: 2px solid black;
+    letter-spacing: 1px;
+    margin-right: 0;
+  }
+
+  .infobar .submitknap {
+    font-family: "headline_one";
+    font-size: 1.4rem;
+    background-color: black;
+    color: white;
+    border-radius: 0;
+    border: 2px solid black;
+    letter-spacing: 1px;
+  }
+
+  .infobar .searchbox {
+    font-family: "headline_one";
+    font-size: 1.4rem;
+    background-color: #ebebeb;
+    color: black;
+    border: 2px solid black;
+    border-radius: 0;
+    letter-spacing: 1px;
+  }
+
+  .infobar .search {
+    flex-basis: 33%;
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  .infobar .filter {
+    flex-basis: 42%;
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  .infobar .sorting {
+    flex-basis: 25%;
+    margin: 0;
+    align-self: flex-start;
+  }
+
+  .infoboks {
+    width: 60vw;
+    left: 20vw;
+    height: 80vh;
+    top: 10vh;
   }
 }

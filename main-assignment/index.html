@@ -47,6 +47,7 @@
               <option value="slytherin">Slytherin</option>
               <option value="ravenclaw">Ravenclaw</option>
               <option value="prefects">Prefects</option>
+              <option value="squad">Members of the inquisitorial squad</option>
               <option value="expelled">Expelled students</option>
             </select>
           </label>
@@ -69,22 +70,36 @@
 
     <section id="detalje" class="hide">
       <article class="infoboks">
-        <button class="luk-knap">X</button>
-        <p class="name"></p>
-        <p class="house"></p>
-        <p class="bloodstatus"></p>
-        <p class="prefect"></p>
-        <p class="expelled"></p>
-        <p class="squad"></p>
-        <img class="image" src="" alt="Picture of student" />
-        <button class="expel-button">Expel student</button>
-        <button class="prefect-button">Make prefect</button>
-        <button class="squad-button">Add to inqustiflaskdj squad</button>
+        <div class="full-col">
+          <button class="luk-knap">X</button>
+        </div>
+
+        <div class="col-img">
+          <img class="image" src="" alt="Picture of student" />
+        </div>
+        <div class="col">
+          <p class="name"></p>
+          <p class="house"></p>
+          <p class="bloodstatus"></p>
+          <p class="prefect"></p>
+
+          <p class="squad">Member of inquisitorial squad: No</p>
+        </div>
+        <div class="col-buttons">
+          <button class="expel-button">Expel student</button>
+          <button class="prefect-button">Make prefect</button>
+          <button class="squad-button">Add to inquisitorial squad</button>
+        </div>
       </article>
     </section>
 
     <section id="remove-prefect" class="hide">
-      <h1>There are already two prefects in this house!!!! Which prefect do you want to replace?</h1>
+      <h1>
+        There are already two prefects <br />
+        in this house! <br />
+        <br />
+        Which prefect do you want to replace?
+      </h1>
       <button class="option1"></button>
       <button class="option2"></button>
     </section>

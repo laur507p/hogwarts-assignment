@@ -22,6 +22,7 @@ const Student = {
   nickname: "",
   image: "",
   house: "",
+  bloodstatus: "",
   prefect: false,
   squad: false,
   expelled: false,
@@ -43,16 +44,18 @@ function loadJSON() {
       prepareObjects(jsonData);
     });
 
-  //   fetch(link2)
-  //     .then((response) => response.json())
-  //     .then((familiesJson) => {
-  //       // when loaded, prepare objects
-  //       prepareObjects(familiesJson);
-  //     });
+  fetch(link2)
+    .then((response) => response.json())
+    .then((familiesJson) => {
+      // when loaded, prepare objects
+      setTimeout(prepareBlood, 1000, familiesJson);
+      //   prepareBlood(familiesJson);
+    });
 }
 
 // cleans data and stores in new array
 function prepareObjects(jsonData) {
+  //   console.log(jsonData);
   jsonData.forEach((jsonObject) => {
     // Create new object with cleaned data - and store that in the cleanedData array
     const student = Object.create(Student);
@@ -114,9 +117,10 @@ function prepareObjects(jsonData) {
       student.image = `${fileLastName}_${firstCharName}.png`;
     } else {
       // til at fjerne dumme leanne
-      student.image = undefined;
+      student.image = "leanne.png";
     }
 
+    student.bloodstatus = "Unknown";
     student.prefect = false;
     student.squad = false;
     student.expelled = false;
@@ -126,6 +130,21 @@ function prepareObjects(jsonData) {
   });
   buildList();
   delegator();
+}
+
+function prepareBlood(families) {
+  console.log(cleanedData);
+  console.log(families);
+
+  cleanedData.forEach((student) => {
+    if (families.pure.includes(student.lastname)) {
+      student.bloodstatus = "pure";
+    } else if (families.half.includes(student.lastname)) {
+      student.bloodstatus = "half";
+    } else {
+      student.bloodstatus = "muggle";
+    }
+  });
 }
 
 // delegating function
@@ -159,30 +178,19 @@ function displayListOfStudents(students) {
 }
 
 function visInfo(student) {
+  console.log("vis detalje");
   const detalje = document.querySelector("#detalje");
   const lukKnap = document.querySelector(".luk-knap");
 
   detalje.classList.remove("hide");
-  lukKnap.addEventListener("click", () => detalje.classList.add("hide"));
-
-  // displays info
-  document.querySelector("#detalje .name").textContent = `${student.firstname} ${student.lastname}`;
-  document.querySelector("#detalje .house").textContent = student.house + " House";
-  document.querySelector("#detalje .image").src = "images/" + student.image;
-
-  // checks if student is prefect or not and displays correct info
-  if (student.prefect === true) {
-    document.querySelector("#detalje .prefect").textContent = "Is prefect: Yes";
-  } else if (student.prefect === false) {
-    document.querySelector("#detalje .prefect").textContent = "Is prefect: No";
-  }
-
-  // checks if student is a member of the ingsdfhjsf squad or not and displays correct info
-  if (student.squad === true) {
-    document.querySelector("#detalje .squad").textContent = "Member of squad: Yes";
-  } else if (student.squad === false) {
-    document.querySelector("#detalje .squad").textContent = "Member of squad: No";
-  }
+  lukKnap.addEventListener("click", () => {
+    detalje.classList.add("hide");
+    document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
+    document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
+    document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".squad-button").removeEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").removeEventListener("click", addToSquad);
+  });
 
   //set theme for each house
   if (student.house == "Gryffindor") {
@@ -195,16 +203,78 @@ function visInfo(student) {
     setTheme("ravenclaw-theme");
   }
 
-  if (student.prefect === false) {
-    document.querySelector(".prefect-button").addEventListener("click", makePrefect);
+  // displays info
+  document.querySelector("#detalje .name").textContent = `${student.firstname} ${student.lastname}`;
+  document.querySelector("#detalje .house").textContent = student.house + " House";
+  document.querySelector("#detalje .image").src = "images/" + student.image;
+  document.querySelector("#detalje .bloodstatus").textContent = "Bloodstatus: " + capitalize(student.bloodstatus);
+
+  // checks if student is prefect or not and displays correct info
+  if (student.prefect === true) {
+    document.querySelector("#detalje .prefect").textContent = "Is prefect: Yes";
+    document.querySelector(".prefect-button").textContent = "Remove prefect";
+    document.querySelector(".expel-button").textContent = "Prefects cannot be expelled";
+  } else if (student.prefect === false) {
+    document.querySelector("#detalje .prefect").textContent = "Is prefect: No";
+    document.querySelector(".prefect-button").textContent = "Make prefect";
+    document.querySelector(".expel-button").textContent = "Expel student";
   }
 
-  function makePrefect() {
+  // checks if student is a member of the ingsdfhjsf squad or not and displays correct info
+  if (student.squad === true) {
+    document.querySelector("#detalje .squad").textContent = "Member of inquisitorial squad: Yes";
+    document.querySelector(".squad-button").classList.remove("hide");
+    document.querySelector(".squad-button").addEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").textContent = "Remove from inquisitorial squad";
+  } else if (student.squad === false && student.bloodstatus === "pure" && student.house === "Slytherin") {
+    document.querySelector(".squad-button").classList.remove("hide");
+    document.querySelector("#detalje .squad").textContent = "Member of inquisitorial squad: No";
+    document.querySelector(".squad-button").addEventListener("click", addToSquad);
+    document.querySelector(".squad-button").textContent = "Add to the inquisitorial squad";
+  } else if (student.bloodstatus === "half" || student.bloodstatus === "muggle" || !student.house === "Slytherin") {
+    document.querySelector(".squad-button").classList.add("hide");
+  }
+
+  function removeFromSquad() {
+    document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
     document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
     document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".squad-button").removeEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").removeEventListener("click", addToSquad);
 
+    student.squad = false;
+    visInfo(student);
+  }
+
+  function addToSquad() {
+    document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
+    document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
+    document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".squad-button").removeEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").removeEventListener("click", addToSquad);
+    student.squad = true;
+    visInfo(student);
+  }
+
+  // checks if student is prefect or not and adds the correct event listener
+  if (student.prefect === false) {
+    document.querySelector(".prefect-button").addEventListener("click", makePrefect);
+  } else if (student.prefect === true) {
+    document.querySelector(".prefect-button").addEventListener("click", unmakePrefect);
+  }
+
+  function unmakePrefect() {
+    console.log("Unmakeprefect");
+    document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
+    document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
+    document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".squad-button").removeEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").removeEventListener("click", addToSquad);
+
+    // array used to store prefects
     let prefectArray = [];
 
+    // sets the prefect array to be the correct array for each house
     if (student.house === "Gryffindor") {
       prefectArray = gPrefects;
     } else if (student.house === "Slytherin") {
@@ -215,35 +285,77 @@ function visInfo(student) {
       prefectArray = hPrefects;
     }
 
-    console.log(prefectArray);
+    // removes selected student from the prefect array and sets prefect status to false
+    prefectArray.splice(prefectArray.indexOf(student), 1);
+    student.prefect = false;
 
+    // refreshes the list and pop up window
+    buildList();
+    visInfo(student);
+  }
+
+  function makePrefect() {
+    document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
+    document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
+    document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".squad-button").removeEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").removeEventListener("click", addToSquad);
+
+    // array used to store prefects
+    let prefectArray = [];
+
+    // sets the prefect array to be the correct array for each house
+    if (student.house === "Gryffindor") {
+      prefectArray = gPrefects;
+    } else if (student.house === "Slytherin") {
+      prefectArray = sPrefects;
+    } else if (student.house === "Ravenclaw") {
+      prefectArray = rPrefects;
+    } else if (student.house === "Hufflepuff") {
+      prefectArray = hPrefects;
+    }
+
+    // checks how many students are currently prefects for the selected house
     if (prefectArray.length < 2) {
+      // sets the prefect status to true and adds the prefect to the array, then refreshes the list and popup
       student.prefect = true;
       prefectArray.push(student);
       visInfo(student);
       buildList();
-      console.log(student);
     } else if (prefectArray.length > 1) {
+      // calls the function to remove one prefect as there are already two prefects
       removePrefect(student, prefectArray);
     }
   }
 
+  // functiion that makes the first letter uppercase
+  function capitalize(word) {
+    const upperCaseWord = word.substring(0, 1).toUpperCase() + word.substring(1);
+    return upperCaseWord;
+  }
+
+  // removes buttons for expelled students
   if (student.expelled === true) {
     document.querySelector(".expel-button").classList.add("hide");
     document.querySelector(".prefect-button").classList.add("hide");
   } else if (student.expelled === false && student.prefect === false) {
+    // checks if student is a prefect or not, students who are prefects cannot be expelled
     document.querySelector(".expel-button").classList.remove("hide");
     document.querySelector(".prefect-button").classList.remove("hide");
     document.querySelector(".expel-button").addEventListener("click", expelButton);
   }
 
   function expelButton() {
-    document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
     document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
+    document.querySelector(".expel-button").removeEventListener("click", expelButton);
+    document.querySelector(".squad-button").removeEventListener("click", removeFromSquad);
+    document.querySelector(".squad-button").removeEventListener("click", addToSquad);
     expelStudent(student);
   }
 }
 
+// function to expel a student
 function expelStudent(student) {
   console.log("EXPELLING A STUDENT");
   // gets index of student in the cleaned data array
@@ -265,9 +377,9 @@ function expelStudent(student) {
   detalje.classList.add("hide");
 }
 
+// function that gives makes the user choose which prefect to replace
 function removePrefect(student, prefectArray) {
   document.querySelector("#remove-prefect").classList.remove("hide");
-  console.log(prefectArray[0], prefectArray[1]);
 
   const button1 = document.querySelector(".option1");
   const button2 = document.querySelector(".option2");
@@ -287,9 +399,8 @@ function removePrefect(student, prefectArray) {
   }
 }
 
+// replaces the chosen student another prefect
 function replacePrefect(prefectArray, student, studentToReplace) {
-  console.log(student, studentToReplace);
-
   prefectArray.splice(prefectArray.indexOf(studentToReplace), 1);
   prefectArray.push(student);
 
@@ -299,8 +410,8 @@ function replacePrefect(prefectArray, student, studentToReplace) {
   document.querySelector("#remove-prefect").classList.add("hide");
   visInfo(student);
   buildList();
-  console.log(prefectArray);
 }
+
 // function to set a given theme/color-scheme, siger at navnet på themet skal være classe navnet
 function setTheme(themeName) {
   localStorage.setItem("theme", themeName);
@@ -331,6 +442,9 @@ function filterList() {
     return filteredList;
   } else if (currentFilter === "prefects") {
     const filteredList = cleanedData.filter(filterPrefect);
+    return filteredList;
+  } else if (currentFilter === "squad") {
+    const filteredList = cleanedData.filter(filterSquad);
     return filteredList;
   } else {
     return cleanedData;
@@ -379,6 +493,14 @@ function filterPrefect(student) {
 
 function filterExpelledStudents(student) {
   if (student.expelled === true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function filterSquad(student) {
+  if (student.squad === true) {
     return true;
   } else {
     return false;
@@ -458,12 +580,12 @@ function hackTheSystem() {
   buildList();
   console.log(cleanedData);
 
-  //   cleanedData.forEach((student) => {
-  //     if (student.bloodstatus === "pure") {
-  //       const values = ["pure", "half", "muggle"];
+  // cleanedData.forEach((student) => {
+  //   if (student.bloodstatus === "pure") {
+  //     const values = ["pure", "half", "muggle"];
 
-  //       const random = Math.floor(Math.random() * values.length);
-  //       student.bloodstatus = values[random];
-  //     }
-  //   });
+  //     const random = Math.floor(Math.random() * values.length);
+  //     student.bloodstatus = values[random];
+  //   }
+  // });
 }
