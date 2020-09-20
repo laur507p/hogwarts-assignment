@@ -322,12 +322,6 @@ function visInfo(student) {
     }
   }
 
-  // functiion that makes the first letter uppercase
-  function capitalize(word) {
-    const upperCaseWord = word.substring(0, 1).toUpperCase() + word.substring(1);
-    return upperCaseWord;
-  }
-
   // removes buttons for expelled students
   if (student.expelled === true) {
     document.querySelector(".expel-button").classList.add("hide");
@@ -422,6 +416,12 @@ function getTheme(student) {
     const themeName = "ravenclaw-theme";
     return themeName;
   }
+}
+
+// functiion that makes the first letter uppercase
+function capitalize(word) {
+  const upperCaseWord = word.substring(0, 1).toUpperCase() + word.substring(1);
+  return upperCaseWord;
 }
 
 // function to set a given theme/color-scheme, siger at navnet på themet skal være classe navnet
