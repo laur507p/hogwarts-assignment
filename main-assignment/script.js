@@ -218,10 +218,15 @@ function visInfo(student) {
     document.querySelector("#detalje .squad").textContent = "Member of inquisitorial squad: No";
     document.querySelector(".squad-button").addEventListener("click", addToSquad);
     document.querySelector(".squad-button").textContent = "Add to the inquisitorial squad";
-  } else if (student.bloodstatus === "half" || student.bloodstatus === "muggle" || !student.house === "Slytherin") {
+  } else if (
+    student.bloodstatus === "half" ||
+    student.bloodstatus === "muggle" ||
+    student.house === "Gryffindor" ||
+    student.house === "Hufflepuff" ||
+    student.house === "Ravenclaw"
+  ) {
     document.querySelector(".squad-button").classList.add("hide");
   }
-
   // these two functions could be made into a single toggle function XD
   function removeFromSquad() {
     document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
