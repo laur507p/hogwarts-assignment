@@ -28,28 +28,20 @@ const Student = {
   expelled: false,
 };
 
+// calls load json function and calls function that adds event liteners to filtering and sorting
 function start() {
   console.log("ready");
-  loadJSON();
+  addEventListenerToButtons();
+  loadJSON("https://petlatkea.dk/2020/hogwarts/students.json", prepareObjects);
+  loadJSON("https://petlatkea.dk/2020/hogwarts/families.json", prepareBlood);
 }
 
 // loads data
-function loadJSON() {
-  const link = "https://petlatkea.dk/2020/hogwarts/students.json";
-  const link2 = "https://petlatkea.dk/2020/hogwarts/families.json";
-  fetch(link)
+function loadJSON(url, callback) {
+  fetch(url)
     .then((response) => response.json())
     .then((jsonData) => {
-      // when loaded, prepare objects
-      prepareObjects(jsonData);
-    });
-
-  fetch(link2)
-    .then((response) => response.json())
-    .then((familiesJson) => {
-      // when loaded, prepare objects
-      setTimeout(prepareBlood, 1000, familiesJson);
-      //   prepareBlood(familiesJson);
+      callback(jsonData);
     });
 }
 
@@ -129,33 +121,24 @@ function prepareObjects(jsonData) {
     cleanedData.push(student);
   });
   buildList();
-  delegator();
 }
 
 function prepareBlood(families) {
-  console.log(cleanedData);
-  console.log(families);
-
   cleanedData.forEach((student) => {
     if (families.pure.includes(student.lastname)) {
       student.bloodstatus = "pure";
     } else if (families.half.includes(student.lastname)) {
       student.bloodstatus = "half";
     } else {
-      student.bloodstatus = "muggle";
+      student.bloodstatus = "muggleborn";
     }
   });
-}
-
-// delegating function
-function delegator() {
-  console.log("Delegator");
-  addEventListenerToButtons();
 }
 
 function addEventListenerToButtons() {
   document.querySelector("#filtering").addEventListener("change", selectFilter);
   document.querySelector("#sorting").addEventListener("change", selectSorting);
+  document.querySelector(".searchbox").addEventListener("input", searchStudents);
 }
 
 // display list of students from our cleaned data
@@ -177,8 +160,18 @@ function displayListOfStudents(students) {
   });
 }
 
+function searchStudents() {
+  const searchInput = document.querySelector(".searchbox").value;
+
+  const searchInputUpper = searchInput.substring(0, 1).toUpperCase() + searchInput.substring(1).toLowerCase();
+
+  const searchResult = cleanedData.filter((student) => student.firstname.includes(searchInputUpper));
+
+  displayListOfStudents(searchResult);
+}
+
+// shows details for the student that is clicked, also delegates out to other functions
 function visInfo(student) {
-  console.log("vis detalje");
   const detalje = document.querySelector("#detalje");
   const lukKnap = document.querySelector(".luk-knap");
 
@@ -193,14 +186,8 @@ function visInfo(student) {
   });
 
   //set theme for each house
-  if (student.house == "Gryffindor") {
-    setTheme("gryffindor-theme");
-  } else if (student.house == "Slytherin") {
-    setTheme("slytherin-theme");
-  } else if (student.house == "Hufflepuff") {
-    setTheme("hufflepuff-theme");
-  } else if (student.house == "Ravenclaw") {
-    setTheme("ravenclaw-theme");
+  if (hasBeenHacked === false) {
+    setTheme(getTheme(student));
   }
 
   // displays info
@@ -235,6 +222,7 @@ function visInfo(student) {
     document.querySelector(".squad-button").classList.add("hide");
   }
 
+  // these two functions could be made into a single toggle function XD
   function removeFromSquad() {
     document.querySelector(".prefect-button").removeEventListener("click", unmakePrefect);
     document.querySelector(".prefect-button").removeEventListener("click", makePrefect);
@@ -244,6 +232,7 @@ function visInfo(student) {
 
     student.squad = false;
     visInfo(student);
+    buildList();
   }
 
   function addToSquad() {
@@ -338,6 +327,8 @@ function visInfo(student) {
   if (student.expelled === true) {
     document.querySelector(".expel-button").classList.add("hide");
     document.querySelector(".prefect-button").classList.add("hide");
+  } else if (student.firstname === "Laura") {
+    document.querySelector(".expel-button").textContent = "LAURA CANNOT BE EXPELLED!!!!";
   } else if (student.expelled === false && student.prefect === false) {
     // checks if student is a prefect or not, students who are prefects cannot be expelled
     document.querySelector(".expel-button").classList.remove("hide");
@@ -410,6 +401,22 @@ function replacePrefect(prefectArray, student, studentToReplace) {
   document.querySelector("#remove-prefect").classList.add("hide");
   visInfo(student);
   buildList();
+}
+
+function getTheme(student) {
+  if (student.house == "Gryffindor") {
+    const themeName = "gryffindor-theme";
+    return themeName;
+  } else if (student.house == "Slytherin") {
+    const themeName = "slytherin-theme";
+    return themeName;
+  } else if (student.house == "Hufflepuff") {
+    const themeName = "hufflepuff-theme";
+    return themeName;
+  } else if (student.house == "Ravenclaw") {
+    const themeName = "ravenclaw-theme";
+    return themeName;
+  }
 }
 
 // function to set a given theme/color-scheme, siger at navnet på themet skal være classe navnet
@@ -560,32 +567,39 @@ function buildList() {
 
 function hackTheSystem() {
   hasBeenHacked = true;
-  // inject myself
 
-  // create an objects from the student prototype
-  // push to cleaned data
-  // const laura = {
-  //     firstname: "laura",
-  //     middlename:
-  // }
+  // styling that is changed when hacked
+  setTheme("hacked-theme");
+  document.querySelector("button").style.backgroundColor = "red";
+  document.querySelector(".expel-button").style.backgroundColor = "red";
+  document.querySelector(".prefect-button").style.backgroundColor = "red";
+  document.querySelector(".squad-button").style.backgroundColor = "red";
+  document.querySelector(".yellowfont").style.color = "red";
+  document.querySelector(".number-of-students").style.color = "red";
+  document.querySelector("body").style.background =
+    "linear-gradient(180deg, rgba(235,235,235,1) 0%, rgba(255,0,0,1) 55%)";
 
+  // create an object for myself to insert into the array
   const myself = Object.create(Student);
   myself.firstname = "Laura";
   myself.middleName = "Toft";
   myself.lastname = "Ragnarsdottir";
   myself.house = "Ravenclaw";
+  myself.image = "mussi.jpg";
+  myself.bloodstatus = "pure";
 
   console.log(myself);
   cleanedData.push(myself);
   buildList();
-  console.log(cleanedData);
 
-  // cleanedData.forEach((student) => {
-  //   if (student.bloodstatus === "pure") {
-  //     const values = ["pure", "half", "muggle"];
+  cleanedData.forEach((student) => {
+    if (student.bloodstatus === "pure") {
+      const values = ["pure", "half", "muggleborn"];
 
-  //     const random = Math.floor(Math.random() * values.length);
-  //     student.bloodstatus = values[random];
-  //   }
-  // });
+      const random = Math.floor(Math.random() * values.length);
+      student.bloodstatus = values[random];
+    } else if (student.bloodstatus === "muggleborn" || student.bloodstatus === "half") {
+      student.bloodstatus = "pure";
+    }
+  });
 }

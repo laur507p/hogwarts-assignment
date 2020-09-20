@@ -12,7 +12,7 @@ body {
 :root {
   --text-color: black;
   --main-color: lavender;
-  --highligt-color: lightblue;
+  --highlight-color: lightblue;
 }
 
 img {
@@ -21,6 +21,10 @@ img {
 
 .hide {
   display: none;
+}
+
+.hacked-font {
+  transition: 0.3s;
 }
 
 /* ------ main ------- */
@@ -78,6 +82,7 @@ header h2 {
   justify-content: space-between;
   border-bottom: 2px solid black;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .list-item:hover {
@@ -91,6 +96,10 @@ header h2 {
 
 .list-item .house {
   margin: 0;
+}
+
+button {
+  cursor: pointer;
 }
 
 .infobar {
@@ -180,12 +189,12 @@ header h2 {
 .infoboks {
   position: fixed;
   padding: 20px;
-  background-color: #ebebeb;
+  background-color: var(--highlight-color);
   font-family: "headline_one";
   font-size: 1.5rem;
   letter-spacing: 0.5px;
-  color: black;
-  width: 80vw;
+  color: var(--text-color);
+  width: 70vw;
   left: 10vw;
   height: 90vh;
   top: 5vh;
@@ -249,7 +258,7 @@ header h2 {
 
 .col-img img {
   width: 100px;
-  border: 7px solid black;
+  border: 7px solid var(--main-color);
 
   border-radius: 30px;
 }
@@ -259,27 +268,32 @@ header h2 {
 }
 
 .gryffindor-theme {
-  --text-color: rgb(255, 8, 0);
-  --main-color: darkgrey;
-  --highligt-color: rgb(189, 189, 189);
+  --text-color: black;
+  --main-color: rgb(243, 0, 0);
+  --highlight-color: #ebebeb;
 }
 
 .slytherin-theme {
-  --text-color: rgb(23, 255, 15);
-  --main-color: rgb(234, 53, 237);
-  --highligt-color: rgb(189, 189, 189);
+  --text-color: black;
+  --main-color: rgb(44, 190, 0);
+  --highlight-color: #ebebeb;
 }
 
 .ravenclaw-theme {
-  --text-color: rgb(34, 0, 255);
-  --main-color: red;
-  --highligt-color: rgb(189, 189, 189);
+  --text-color: black;
+  --main-color: rgb(17, 0, 255);
+  --highlight-color: #ebebeb;
 }
 
 .hufflepuff-theme {
-  --text-color: rgb(255, 251, 0);
-  --main-color: black;
-  --highligt-color: rgb(189, 189, 189);
+  --text-color: black;
+  --main-color: rgb(255, 251, 0);
+  --highlight-color: #ebebeb;
+}
+
+.hacked-theme {
+  --text-color: red;
+  --highlight-color: black;
 }
 
 /* ------ PREFECFT POP UP------ */
@@ -404,7 +418,7 @@ header h2 {
   }
 
   .infobar .search {
-    flex-basis: 33%;
+    flex-basis: 30%;
     margin: 0;
     align-self: flex-start;
   }
@@ -422,9 +436,9 @@ header h2 {
   }
 
   .infoboks {
-    width: 60vw;
-    left: 20vw;
-    height: 80vh;
-    top: 10vh;
+    width: 40vw;
+    left: 30vw;
+    height: 90vh;
+    top: 5vh;
   }
 }
